@@ -1,6 +1,5 @@
 from datetime import date, timedelta
 import datetime
-import json 
 
 
 class getData:
@@ -41,9 +40,15 @@ class getData:
         if delta != None and self.temporalidad.lower() != 'siempre':
             for x in col.find({'fecha':{'$lt':datetime.datetime.utcnow(),
                                         '$gt':datetime.datetime.utcnow() - delta}}):
+                del x['_id']
+                del x['fecha']
+                del x['__v']
                 self.data.append(x)
         elif self.temporalidad.lower() == 'siempre':
             for x in col.find():
+                del x['_id']
+                del x['fecha']
+                del x['__v']
                 self.data.append(x)
         else:
             raise ValueError('La temporalidad que quieres no se planteo o la hiciste mal')

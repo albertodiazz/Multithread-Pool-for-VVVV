@@ -5,14 +5,16 @@ sys.path.insert(0, '/mnt/d/trabajo/cocay/muvi/futurodelaVivienda/serviciosRouter
 
 from bin import mongo_connection 
 from bin import getData 
+from bin import getJson
 
 
 
 def testParallelClientes(temporalidad):
     with mongo_connection() as connection:
         with getData(connection.connector, temporalidad) as data:
-            print('Data con un len de {} con Temporalidad: {} '.format(len(data.data), 
+            print('\nData con un len de {} con Temporalidad: {} '.format(len(data.data), 
                                                                     temporalidad))
+            getJson(data.data)
             pass
 
 
