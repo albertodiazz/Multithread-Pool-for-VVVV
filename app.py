@@ -1,6 +1,7 @@
 from bin import mongo_connection
 from bin import getData 
 from bin import getJson 
+from bin import getPorcentajes 
 import json 
 
 
@@ -8,7 +9,8 @@ import json
 def mongoRequest():
     with mongo_connection() as connection:
         with getData(connection.connector, 'siempre') as data:
-            getJson(data.data)
+            toJson = getJson(data.data)
+            getPorcentajes(toJson) 
             pass
 
 

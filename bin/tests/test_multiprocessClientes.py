@@ -6,6 +6,7 @@ sys.path.insert(0, '/mnt/d/trabajo/cocay/muvi/futurodelaVivienda/serviciosRouter
 from bin import mongo_connection 
 from bin import getData 
 from bin import getJson
+from bin import getPorcentajes 
 
 
 
@@ -14,7 +15,8 @@ def testParallelClientes(temporalidad):
         with getData(connection.connector, temporalidad) as data:
             print('\nData con un len de {} con Temporalidad: {} '.format(len(data.data), 
                                                                     temporalidad))
-            getJson(data.data)
+            toJson = getJson(data.data)
+            getPorcentajes(toJson) 
             pass
 
 

@@ -93,7 +93,5 @@ def getJson(data):
     # Esto me genera mi lista de diccionarionos en una sola
     oneDict = dict(ChainMap(*dataFilter)) 
     toJson = json.dumps(oneDict, indent= 4)
-    # test = json.loads(toJson)
-    # print(test['modulo1']['pregunta2']['respuestas'])
     print(toJson)
     return toJson
