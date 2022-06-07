@@ -49,8 +49,6 @@ def setPorcentajes(sizeRespuesta, numPregunta):
         # Aquie es donde sacamos el porcentaje
         s = sum(countD.values())
         for k, v in countD.items():
-            # TODO : DUDA
-            # [] Daniel necesita los porcentajes en enteros o con decimales
             pct = v * 100 / s
             # print(k, int(pct))
             # pct = es el porcentaje

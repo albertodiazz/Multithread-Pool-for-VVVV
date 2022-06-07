@@ -22,11 +22,11 @@ class mongo_connection(object):
 
 
     def __enter__(self): 
-        print('Entablando conexion....')
+        print('Entablando conexion Mongo....')
         self.connector = MongoClient(self.connection_string)
         return self
 
 
     def __exit__(self, exc_type, exc_value, exc_traceback): 
-        print('Cerrando conexion....')
+        print('Cerrando conexion Mongo....')
         self.connector.close()
