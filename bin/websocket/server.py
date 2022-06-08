@@ -3,6 +3,7 @@ from websockets import serve
 from bin import config as c
 import websockets 
 import asyncio
+import json 
 
 CLIENTS = set()
 
@@ -15,10 +16,10 @@ async def handler(websocket):
         async for message in websocket:
             try:
                 if message == 'sendToVVVV':
-                    print('Hay que cambiar al siguiente nivel por que Touch lo dice')
+                    print('Estamos mandando los mensajes a vvvv')
                     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                     await broadcast(json.dumps({'result': 200,
-                                                'body': json.dumps(DATA_TO_FRONT)}))
+                                                'body': json.dumps(c.DATATOFRONT)}))
                     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             except TypeError as error:
                 await websocket.send(json.dumps({'result': 400}))
@@ -28,24 +29,29 @@ async def handler(websocket):
         # Esto suele ocurrir cuando reinicio la conexion en TouchDesigner
         # ya que al reiniciar me da un nuevo cliente
         print('>>>>>>>>>>>>>>>>>>')
-        print(f'Sesion Terminada', e)
+        print(f'Sesion Terminada Handler', e)
         print('>>>>>>>>>>>>>>>>>>')
         pass
+    except websockets.exceptions.ConnectionClosedOK as e:
+        print('>>>>>>>>>>>>>>>>>>')
+        print(f'ConnectionClosedOk Handler', e)
+        print('>>>>>>>>>>>>>>>>>>')
+
+async def broadcast(message):
+    # En esta funcion obtenemos la cantidad de clientes conectados y es donde
+    # les enviamos el mensaje a todos los cliente 
+    # Hay una mejor manera de hacer esto en la documentacion The concurrent way
+    # https://websockets.readthedocs.io/en/stable/topics/broadcast.html
+    for websocket in CLIENTS.copy():
+        try:
+            await websocket.send(message)
+        except websockets.exceptions.ConnectionClosedError as e:
+            print('>>>>>>>>>>>>>>>>>>')
+            print(f'Sesion Terminada en Broadcast', e)
+            print('>>>>>>>>>>>>>>>>>>')
+            pass
 
 class webSocketServer():
-
-
-    async def broadcast(self, message):
-        # En esta funcion obtenemos la cantidad de clientes conectados y es donde
-        # les enviamos el mensaje a todos los cliente 
-        # Hay una mejor manera de hacer esto en la documentacion The concurrent way
-        # https://websockets.readthedocs.io/en/stable/topics/broadcast.html
-        for websocket in CLIENTS.copy():
-            try:
-                await websocket.send(message)
-            except websockets.ConnectionClosed:
-                pass
-
 
     async def execute_WebSocket(self):
         print('Inciando WebSocket')

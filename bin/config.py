@@ -1,6 +1,13 @@
 IPWEBSOCKET = 'localhost'
 PORTWEBSOCKET = 8765
 
+IPUDP = 'localhost'
+PORTUDP = 3000 
+
+IPFLASK = 'localhost'
+PORTFLASK = 5000 
+
+DATATOFRONT = None
 # La estructura de datos esta basada en el nombre del modulo[str]
 # el numero de pregunta[str] y la cantidad de respuestas[int]
 # IMPORTANTE en caso de que cambien el numero de respuestas o aumenten

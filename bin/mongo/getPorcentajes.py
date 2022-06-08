@@ -92,4 +92,5 @@ def getPorcentajes(getJson):
         numPreguntas.clear()
 
     # print(json.dumps(getData, indent=4))
-    return json.dumps(getData, indent=4)
+    # return json.dumps(getData, indent=4)
+    return getData

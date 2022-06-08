@@ -7,7 +7,7 @@ sys.path.insert(0, '/mnt/d/trabajo/cocay/muvi/futurodelaVivienda/serviciosRouter
 
 
 def testParallelClientes(cliente):
-        res = requests.put('http://localhost:5000/data')
+        res = requests.put('http://localhost:5000/data/{}'.format(cliente))
         print('Response to Cliente{}: {}'.format(cliente,res.json()['result']))
 
 
