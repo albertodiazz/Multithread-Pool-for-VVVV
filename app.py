@@ -9,6 +9,7 @@ from bin import config as c
 from flask import Flask, request 
 from flask_cors import CORS 
 import concurrent.futures
+import functools 
 import json 
 import asyncio 
 
@@ -20,12 +21,14 @@ CORS(app)
 @app.route('/data/<id>', methods= ['PUT'])
 async def mongoRequest(id):
     with mongo_connection() as connection:
-        with getData(connection.connector, c.DATAINTHREADS['temporalidad']) as data:
+        temporalidad = c.DATAINTHREADS['temporalidad']
+        modulos = c.DATAINTHREADS['modulos']
+        with getData(connection.connector, temporalidad) as data:
             toJson = getJson(data.data)
             DATATOFRONT = getPorcentajes(toJson) 
-            DATATOFRONT['modulos'] = c.DATAINTHREADS['modulos']
-            DATATOFRONT['temporalidad'] = c.DATAINTHREADS['temporalidad']
-            DATATOFRONT['volumen'] = c.DATAINTHREADS['volumen']
+            DATATOFRONT['modulos'] = modulos 
+            DATATOFRONT['temporalidad'] = temporalidad 
+            # DATATOFRONT['volumen'] = c.DATAINTHREADS['volumen']
             # TODO : PENDIENTE
             # [] para produccion hay que quitarle el id ya que solo me sirve
             #    para probar que los mensajes me lleguen en el orden correcto
@@ -46,7 +49,7 @@ async def threadsAsyncio():
             loop = asyncio.get_running_loop()
             futures = [
                 await loop.run_in_executor(pool, webSocketServer().execute_WebSocket),
-                loop.run_in_executor(pool, app.run),
+                loop.run_in_executor(pool, functools.partial(app.run, host= c.IPFLASK, port=c.PORTFLASK)),
                 loop.run_in_executor(pool, filterUdp)
             ]
             results = await asyncio.gather(*futures, return_exceptions=False)
@@ -63,12 +66,13 @@ if __name__ == '__main__':
     #    modulos, temporalidad, volumen, eso se lo enviamos a VVVV   
     # [x] Enviar por webSocket los mensajes a VVVV 
     # [x] Componer el json cuando no hay data 
-    # [] Agregar la ip y port a flask con config 
+    # [x] Agregar la ip y port a flask con config 
     # -------------------------------------------------------
     # TODO : TEST 
-    # [] Generar prueba de cambiar los rangos de tiempo mientras se hacen peticiones
+    # [x] Generar prueba de cambiar los rangos de tiempo mientras se hacen peticiones
     #    y mienras cambiamos el volumen y los msg de modulos
-    # [] Revizar que el websocket funcione mientras se hacen todas estas interacciones
+    # [x] Revizar que el websocket funcione mientras se hacen todas estas interacciones
+    # [x] Revizar con VVVV y checar la coneccion 
     try:
         asyncio.run(threadsAsyncio())
         # asyncio.run(webSocketServer().execute_WebSocket())

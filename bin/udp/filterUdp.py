@@ -10,14 +10,13 @@ def msgModulos(msg):
     res = ['todas','derechos','vivienda','bienestar','desarrollo','academico']
     try:
         _index = type(res.index(msg))
+        print('hasta aqui funciona')
         if _index == int:
             # Solo actualizamos cuando el valor sea enviado por el medialon
-            c.DATAINTHREADS['modulos'] = res[_index] 
-            return res[_index] 
-        else:
-            return None 
+            c.DATAINTHREADS['modulos'] = msg 
     except ValueError:
-        return None 
+        # print('ocurrio un error en msgModulos')
+        pass
 
 
 def msgTemporalidad(msg):
@@ -31,19 +30,18 @@ def msgTemporalidad(msg):
         if _index == int:
             # Solo actualizamos cuando el valor sea enviado por el medialon
             c.DATAINTHREADS['temporalidad'] = msg 
-        else:
-            return None 
     except ValueError as error:
-        return None 
+        # print('ocurrio un error en msgTemporalidad')
+        pass
+
 
 def msgVolumen(msg):
     try:
        _type = type(int(msg)) 
        c.DATAINTHREADS['volumen'] = _type
-       return _type
     except ValueError:
-        print('no me estas enviando un valor valido para convertilos a int')
-        return None
+        # print('ocurrio un error en msgVolumen')
+        pass
 
 
 def filterUdp():
@@ -58,11 +56,11 @@ def filterUdp():
             # del string no corresponde al del array
             message = bytes.decode(bytesAddressPair[0])
             # print(type(message), len(message.replace(' ', '')), len('1m'))
-            addessClient = bytesAddressPair[1] 
-            # TODO : TEST
-            # [] Testear esto, hay que irlo cambiando mientras se hacen las peticiones
+            addressClient = bytesAddressPair[1] 
             msgModulos(message)
             msgTemporalidad(message)
             msgVolumen(message)
             # print('2Msg: {} IpCliente: {} '.format(message, addessClient)) 
-            print('IpCliente: {} '.format(addessClient)) 
+            print('IpCliente: {} '.format(addressClient)) 
+            # udp.serverSocket.sendto('ok', '{}:{}'.format(c.IPMEDIALON, c.PORTMEDIALON))
+            udp.serverSocket.sendto('ok'.encode('utf-8'), (c.IPMEDIALON, c.PORTMEDIALON))

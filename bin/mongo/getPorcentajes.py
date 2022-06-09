@@ -52,7 +52,11 @@ def setPorcentajes(sizeRespuesta, numPregunta):
             pct = v * 100 / s
             # print(k, int(pct))
             # pct = es el porcentaje
-            fixe[int(k)-1] = int(pct)
+            try:
+                fixe[int(k)-1] = int(pct)
+            except IndexError:
+                print('Error en el index value de getPorcentajes')
+                pass
         '''
         Aqui es donde agragamos los porcentajes a nuestro json
         '''

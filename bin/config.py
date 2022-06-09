@@ -6,6 +6,9 @@ PORTUDP = 3000
 
 IPFLASK = 'localhost'
 PORTFLASK = 5000 
+
+IPMEDIALON = 'localhost'
+PORTMEDIALON = 1234
 # En esta varible es donde seteamos el json que le llega a VVVV
 DATATOFRONT = None
 # Estos son los valores iniciales del json cada que se abre la app para que cambien
