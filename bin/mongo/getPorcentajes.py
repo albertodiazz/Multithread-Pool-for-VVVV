@@ -37,12 +37,12 @@ def setPorcentajes(sizeRespuesta, numPregunta):
         respuesta = getData['modulo'+modulos]['pregunta'+str(numPregunta)]['respuestas'].split(',')
         # ------------------------------------------------------------------
         sinRepetidos = sorted(list(dict.fromkeys(respuesta)))
-        for expect in sizeRespuesta:
-            if expect not in sinRepetidos:
-                # Si hay alguna respuesta que no fue selecionada la agreagmos
-                # al tamano del array que debe ser en base al wireframe
-                sinRepetidos.append(str(expect))
-        sinRepetidos = sorted(sinRepetidos)
+        # print('expect: {} sinRepetidos: {}'.format(sizeRespuesta.split(',')[-1], sinRepetidos))
+        arrayLimpio = []
+        for i in range(1,int(sizeRespuesta.split(',')[-1])+1):
+            arrayLimpio.append(str(i))
+        # print('sinRepetidos: {}'.format(arrayLimpio))
+        sinRepetidos = arrayLimpio 
         fixe = [x*0 for x in range(len(sinRepetidos))]
         # ------------------------------------------------------------------
         countD = ({i:respuesta.count(i) for i in respuesta})
@@ -59,7 +59,14 @@ def setPorcentajes(sizeRespuesta, numPregunta):
         getData['modulo'+modulos]['pregunta'+str(numPregunta)]['respuestas'] = ",".join(str(x) for x in fixe)
         # print(type(fixe), fixe)
     except KeyError:
-        print('No se encuentra el valor en getPorcentaje por que la data esta vacia')
+        getData['modulo'+modulos].update({'pregunta'+str(numPregunta): {'respuestas': sizeRespuesta}}) 
+        respuesta = getData['modulo'+modulos]['pregunta'+str(numPregunta)]['respuestas'].split(',')
+        sinRepetidos = sorted(list(dict.fromkeys(respuesta)))
+        sinRepetidos = sorted(sinRepetidos)
+        fixe = [x*0 for x in range(len(sinRepetidos))]
+        getData['modulo'+modulos]['pregunta'+str(numPregunta)]['respuestas'] = ",".join(str(x) for x in fixe)
+        # print('modulo'+modulos,'pregunta'+str(numPregunta), len(fixe), sizeRespuesta)
+        print('Error de la data vacia en:  modulo{}, pregunta{} lo hemos arreglado'.format(modulos,numPregunta))
 
 
 def getPorcentajes(getJson):
