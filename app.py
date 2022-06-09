@@ -18,8 +18,8 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/data/<id>', methods= ['PUT'])
-async def mongoRequest(id):
+@app.route('/data', methods= ['PUT'])
+async def mongoRequest():
     with mongo_connection() as connection:
         temporalidad = c.DATAINTHREADS['temporalidad']
         modulos = c.DATAINTHREADS['modulos']
@@ -32,14 +32,12 @@ async def mongoRequest(id):
             # TODO : PENDIENTE
             # [] para produccion hay que quitarle el id ya que solo me sirve
             #    para probar que los mensajes me lleguen en el orden correcto
-            cliente = id
             # Esto lo podria cerrar y levantar cada que se necesite pero el problema
             # esta en que si VVVV se conecta en automatico hoy hay que manejar la desconexion
             # desde VVVV
             # print(json.dumps(DATATOFRONT, indent=4))
-            await broadcast(json.dumps({'cliente': cliente,'body': DATATOFRONT}))
+            await broadcast(json.dumps({'body': DATATOFRONT}))
             return json.dumps({'result': '200',
-                               'cliente': cliente,
                                'body': DATATOFRONT})
 
 
