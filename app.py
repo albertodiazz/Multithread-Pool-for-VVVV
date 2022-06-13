@@ -29,12 +29,9 @@ async def mongoRequest():
             DATATOFRONT['modulos'] = modulos 
             DATATOFRONT['temporalidad'] = temporalidad 
             # DATATOFRONT['volumen'] = c.DATAINTHREADS['volumen']
-            # TODO : PENDIENTE
-            # [] para produccion hay que quitarle el id ya que solo me sirve
-            #    para probar que los mensajes me lleguen en el orden correcto
             # Esto lo podria cerrar y levantar cada que se necesite pero el problema
-            # esta en que si VVVV se conecta en automatico hoy hay que manejar la desconexion
-            # desde VVVV
+            # esta en que si VVVV se conecta en automatico o hay que manejar la desconexion
+            # desde VVVV entonces por eso lo dejare arriba todo el tiempo
             # print(json.dumps(DATATOFRONT, indent=4))
             await broadcast(json.dumps({'body': DATATOFRONT}))
             return json.dumps({'result': '200',
