@@ -2,7 +2,7 @@ IPWEBSOCKET = 'localhost'
 PORTWEBSOCKET = 8765
 
 IPUDP = 'localhost'
-PORTUDP = 3000 
+PORTUDP = 1234 
 
 IPFLASK = 'localhost'
 PORTFLASK = 5000 
