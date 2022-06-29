@@ -1,0 +1,1 @@
+powershell.exe -ExecutionPolicy Bypass -File "C:\Users\Equipo\Desktop\servidor\runCurl.ps1"

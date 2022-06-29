@@ -1,12 +1,12 @@
-IPWEBSOCKET = 'localhost'
+IPWEBSOCKET = '10.90.125.20'
 PORTWEBSOCKET = 8765
-
-IPUDP = 'localhost'
+# Aqui es donde recive el udp
+IPUDP = '10.90.125.20'
 PORTUDP = 1234 
 
-IPFLASK = 'localhost'
+IPFLASK = '10.90.125.20'
 PORTFLASK = 5000 
-
+# Le ponemos la Ip del medialon
 IPMEDIALON = 'localhost'
 PORTMEDIALON = 1234
 # En esta varible es donde seteamos el json que le llega a VVVV

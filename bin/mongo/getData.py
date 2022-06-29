@@ -28,7 +28,10 @@ class getData:
 
     def __enter__(self):
         # Conexion con base de datos y coleccion
-        col = self.connector.dbMunabi.respuestas
+        # TODO: IMPORTANTE dbtest1 cambiarlo a la base de datos final
+        col = self.connector.dbtest1.respuestas
+        # for x in col.find():
+            # print(x)
         # Consulta de dato en base a una temporalidad
         delta = None
         if self.temporalidad.lower() == '2h':

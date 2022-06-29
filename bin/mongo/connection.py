@@ -17,7 +17,8 @@ class mongo_connection(object):
                  port=os.environ['PORT'], 
                  db=os.environ['DB']):
 
-        self.connection_string = 'mongodb://{}:{}@{}:{}/{}'.format(user, password, ip, port, db) 
+        # self.connection_string = 'mongodb://{}:{}@{}:{}/{}'.format(user, password, ip, port, db) 
+        self.connection_string = 'mongodb://{}:{}/{}'.format(ip, port, db) 
         self.connector = None
 
 

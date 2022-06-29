@@ -25,7 +25,7 @@ async def mongoRequest():
         modulos = c.DATAINTHREADS['modulos']
         with getData(connection.connector, temporalidad) as data:
             toJson = getJson(data.data)
-            DATATOFRONT = getPorcentajes(toJson) 
+            DATATOFRONT = getPorcentajes(toJson)
             DATATOFRONT['modulos'] = modulos 
             DATATOFRONT['temporalidad'] = temporalidad 
             # DATATOFRONT['volumen'] = c.DATAINTHREADS['volumen']
@@ -33,6 +33,13 @@ async def mongoRequest():
             # esta en que si VVVV se conecta en automatico o hay que manejar la desconexion
             # desde VVVV entonces por eso lo dejare arriba todo el tiempo
             # print(json.dumps(DATATOFRONT, indent=4))
+            # Aqui es donde le mando el json completo a VVVV
+            # print(DATATOFRONT["modulo1"]["pregunta1"])
+            modulo1 = DATATOFRONT["modulo1"]["pregunta1"]["respuestas"] + DATATOFRONT["modulo1"]["pregunta2"]["respuestas"] + DATATOFRONT["modulo1"]["pregunta3"]["respuestas"]
+            modulo2 = DATATOFRONT["modulo2"]["pregunta1"]["respuestas"] + DATATOFRONT["modulo2"]["pregunta2"]["respuestas"]
+            modulo3 = DATATOFRONT["modulo3"]["pregunta1"]["respuestas"] + DATATOFRONT["modulo3"]["pregunta2"]["respuestas"]
+            modulo4 = DATATOFRONT["modulo4"]["pregunta1"]["respuestas"] + DATATOFRONT["modulo4"]["pregunta2"]["respuestas"]
+            DATATOFRONT["todas"] = modulo1+modulo2+modulo3+modulo4
             await broadcast(json.dumps({'body': DATATOFRONT}))
             return json.dumps({'result': '200',
                                'body': DATATOFRONT})
@@ -68,6 +75,9 @@ if __name__ == '__main__':
     #    y mienras cambiamos el volumen y los msg de modulos
     # [x] Revizar que el websocket funcione mientras se hacen todas estas interacciones
     # [x] Revizar con VVVV y checar la coneccion 
+    # -------------------------------------------------------
+    # [] Al iniciar hay que mandar un curl para que los datos se vean reflejados en VVVV
+    # [] Hay que resolver la excepcion con udpSend
     try:
         asyncio.run(threadsAsyncio())
         # asyncio.run(webSocketServer().execute_WebSocket())

@@ -10,8 +10,8 @@ def msgModulos(msg):
     res = ['todas','derechos','vivienda','bienestar','desarrollo','academico']
     try:
         _index = type(res.index(msg))
-        print('hasta aqui funciona')
         if _index == int:
+            print('hasta aqui funciona')
             # Solo actualizamos cuando el valor sea enviado por el medialon
             c.DATAINTHREADS['modulos'] = msg 
     except ValueError:
@@ -62,5 +62,7 @@ def filterUdp():
             msgVolumen(message)
             # print('2Msg: {} IpCliente: {} '.format(message, addessClient)) 
             print('IpCliente: {} '.format(addressClient)) 
-            # udp.serverSocket.sendto('ok', '{}:{}'.format(c.IPMEDIALON, c.PORTMEDIALON))
-            udp.serverSocket.sendto('ok'.encode('utf-8'), (c.IPMEDIALON, c.PORTMEDIALON))
+            # TODO : BUG 
+            # cuando no hay conexion con el medialon el udp se queda trabado
+            # esto hay que modificarlo
+            # udp.serverSocket.sendto('ok'.encode('utf-8'), (c.IPMEDIALON, c.PORTMEDIALON))

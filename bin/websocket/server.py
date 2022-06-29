@@ -46,6 +46,8 @@ async def broadcast(message):
         try:
             await websocket.send(message)
         except websockets.exceptions.ConnectionClosedError as e:
+            # Esto suele ocurrir cuando se cierra la conexon con un cliente
+            # de webSocket
             print('>>>>>>>>>>>>>>>>>>')
             print(f'Sesion Terminada en Broadcast', e)
             print('>>>>>>>>>>>>>>>>>>')
