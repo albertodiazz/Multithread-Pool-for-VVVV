@@ -4,6 +4,7 @@ from bin import config as c
 import websockets 
 import asyncio
 import json 
+import requests 
 
 CLIENTS = set()
 
@@ -13,6 +14,8 @@ async def handler(websocket):
         print('>>>>>>>>>>>>>>>>>>')
         print('Cliente Conectado')
         print('>>>>>>>>>>>>>>>>>>')
+        # Aqui hacemos que al conectarse el cliente mande un requests para solicitar los datos
+        requests.put('http://{}:{}/data'.format(c.IPFLASK, c.PORTFLASK))
         async for message in websocket:
             try:
                 if message == 'sendToVVVV':
