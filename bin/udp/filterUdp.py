@@ -54,6 +54,8 @@ def filterUdp():
             # TODO : IMPORTANTE
             # Los mensajes me los tiene que mandar en bytes ya que si no el len
             # del string no corresponde al del array
+            # Sin embargo en mi red local me deja enviarlos en one per message
+            # hay que revizar eso con redes 
             message = bytes.decode(bytesAddressPair[0])
             # print(type(message), len(message.replace(' ', '')), len('1m'))
             addressClient = bytesAddressPair[1] 
@@ -65,4 +67,5 @@ def filterUdp():
             # TODO : BUG 
             # cuando no hay conexion con el medialon el udp se queda trabado
             # esto hay que modificarlo
+            # Sin embargo en mi red local no lo hace
             # udp.serverSocket.sendto('ok'.encode('utf-8'), (c.IPMEDIALON, c.PORTMEDIALON))
